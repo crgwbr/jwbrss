@@ -15,14 +15,23 @@ fg.link(href='https://crgwbr.com/jwb.atom', rel='self')
 
 for item in data['category']['media']:
     fe = fg.add_entry()
-    fe.id( item['naturalKey'] )
+
+    fe.id( item['guid'] )
     fe.title( item['title'] )
     fe.description( item['description'] )
+    fe.published( item['firstPublished'] )
 
     files = item['files']
     files.sort(key=lambda file: file['bitRate'], reverse=True)
     file = files[0]
-    fe.enclosure(file['progressiveDownloadURL'], 0, file['mimetype'])
+    url = file['progressiveDownloadURL']
+    mime = file['mimetype']
+
+    fe.enclosure(url, 0, mime)
+    fe.link(href=url, rel='enclosure', type=mime)
+
+    fe.podcast.itunes_image( item['images']['wsr']['lg'] )
+
 
 fg.rss_str(pretty=True)
 fg.rss_file('podcast.xml')
