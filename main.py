@@ -28,7 +28,7 @@ for item in data['category']['media']:
     mime = file['mimetype']
 
     fe.enclosure(url, 0, mime)
-    fe.link(href=url, rel='enclosure', type=mime)
+    fe.link(href=url, type=mime)
 
     fe.podcast.itunes_image( item['images']['wsr']['lg'] )
 
