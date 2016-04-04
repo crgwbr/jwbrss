@@ -30,8 +30,12 @@ for item in data['category']['media']:
     fe.enclosure(url, 0, mime)
     fe.link(href=url, type=mime)
 
-    fe.podcast.itunes_image( item['images']['wsr']['lg'] )
-
+    for size in ('wsr', 'wss', 'sqr', 'sqs'):
+        try:
+            fe.podcast.itunes_image( item['images'][size]['lg'] )
+            break
+        except KeyError:
+            pass
 
 fg.rss_str(pretty=True)
 fg.rss_file('podcast.xml')
