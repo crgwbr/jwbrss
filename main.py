@@ -21,7 +21,7 @@ for item in data['category']['media']:
     fe.description( item['description'] )
     fe.published( item['firstPublished'] )
 
-    files = item['files']
+    files = [f for f in item['files'] if not f['subtitled']]
     files.sort(key=lambda file: file['bitRate'], reverse=True)
     file = files[0]
     url = file['progressiveDownloadURL']
